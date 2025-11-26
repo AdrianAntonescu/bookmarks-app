@@ -1,0 +1,20 @@
+@import '_variables.scss';
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
+}
+
+.search-bar-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid $off-white;
+    color: $off-white;
+    outline: none;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    color: $off-white;
+}

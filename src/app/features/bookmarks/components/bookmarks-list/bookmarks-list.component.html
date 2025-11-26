@@ -1,37 +1,68 @@
-<div
-  class="container"
+<ng-container
   *ngIf="
-    groupedBookmarks$ | async as groupedBookmarks;
-    else noBookmarksAvailable
+    searchService.searchTermObservable$ | async;
+    else groupedBookmarksSection
   "
 >
-  <ng-container *ngIf="isBookmarksListPopulated(groupedBookmarks); else noBookmarksAvailable">
-    <section *ngIf="groupedBookmarks.today.length > 0">
-      <h3 class="bookmarks-section-title">Today</h3>
+  <div
+    class="container"
+    *ngIf="filteredBookmarks$ | async as filteredBookmarks"
+  >
+    <ng-container *ngIf="filteredBookmarks.length; else noResultsFound">
       <app-bookmark-card
-        *ngFor="let bookmark of groupedBookmarks.today"
+        *ngFor="let bookmark of filteredBookmarks"
         [bookmark]="bookmark"
       ></app-bookmark-card>
-    </section>
+    </ng-container>
 
-    <section *ngIf="groupedBookmarks.yesterday.length > 0">
-      <h3 class="bookmarks-section-title">Yesterday</h3>
-      <app-bookmark-card
-        *ngFor="let bookmark of groupedBookmarks.yesterday"
-        [bookmark]="bookmark"
-      ></app-bookmark-card>
-    </section>
+    <ng-template #noResultsFound>
+      <h3 class="no-bookmarks-title">No results found</h3>
+    </ng-template>
+  </div>
+</ng-container>
 
-    <section *ngIf="groupedBookmarks.older.length > 0">
-      <h3 class="bookmarks-section-title">Older</h3>
-      <app-bookmark-card
-        *ngFor="let bookmark of groupedBookmarks.older"
-        [bookmark]="bookmark"
-      ></app-bookmark-card>
-    </section>
-  </ng-container>
-</div>
+<ng-template #groupedBookmarksSection>
+  <div
+    class="container"
+    *ngIf="
+      groupedBookmarks$ | async as groupedBookmarks;
+      else noBookmarksAvailable
+    "
+  >
+    <ng-container
+      *ngIf="
+        isBookmarksListPopulated(groupedBookmarks);
+        else noBookmarksAvailable
+      "
+    >
+      <section *ngIf="groupedBookmarks.today.length > 0">
+        <h3 class="bookmarks-section-title">Today</h3>
+        <app-bookmark-card
+          *ngFor="let bookmark of groupedBookmarks.today"
+          [bookmark]="bookmark"
+        ></app-bookmark-card>
+      </section>
 
-<ng-template #noBookmarksAvailable>
-  <h3 class="no-bookmarks-title">No bookmarks available.</h3>
+      <section *ngIf="groupedBookmarks.yesterday.length > 0">
+        <h3 class="bookmarks-section-title">Yesterday</h3>
+        <app-bookmark-card
+          *ngFor="let bookmark of groupedBookmarks.yesterday"
+          [bookmark]="bookmark"
+        ></app-bookmark-card>
+      </section>
+
+      <section *ngIf="groupedBookmarks.older.length > 0">
+        <h3 class="bookmarks-section-title">Older</h3>
+        <app-bookmark-card
+          *ngFor="let bookmark of groupedBookmarks.older"
+          [bookmark]="bookmark"
+        ></app-bookmark-card>
+      </section>
+    </ng-container>
+  </div>
+
+  <ng-template #noBookmarksAvailable>
+    <h3 class="no-bookmarks-title">No bookmarks available
+    </h3>
+  </ng-template>
 </ng-template>

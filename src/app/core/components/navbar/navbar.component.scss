@@ -1,7 +1,10 @@
+@import '_variables.scss';
+
 mat-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: $off-white
 }
 
 .navbar-title {

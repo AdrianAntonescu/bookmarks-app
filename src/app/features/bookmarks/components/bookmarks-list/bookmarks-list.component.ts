@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, take } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Bookmark, GroupedBookmarks } from '../../../../shared/models/bookmark';
@@ -7,6 +7,7 @@ import { normalizeDate } from '../../../../utils/date.helper';
 import { BookmarksService } from '../../bookmarks.service';
 import { AppState } from '../../../../app.state';
 import { selectSortedBookmarks } from '../../store/bookmarks.selectors';
+import { SearchService } from '../../../../shared/services/search.service';
 
 @Component({
   selector: 'app-bookmarks-list',
@@ -14,18 +15,50 @@ import { selectSortedBookmarks } from '../../store/bookmarks.selectors';
   styleUrls: ['./bookmarks-list.component.scss'],
 })
 export class BookmarksListComponent implements OnInit {
-  public groupedBookmarks$: Observable<GroupedBookmarks>;
+  public groupedBookmarks$!: Observable<GroupedBookmarks>;
+  public filteredBookmarks$!: Observable<Bookmark[]>;
 
   constructor(
     private bookmarksService: BookmarksService,
-    private store: Store<AppState>
-  ) {
+    private store: Store<AppState>,
+    public searchService: SearchService
+  ) {}
+
+  ngOnInit() {
+    this.loadBookmarksIfStoreIsEmpty();
+    this.initializeGroupedBookmarksStream();
+    this.initializeFilteredBookmarksStream();
+  }
+
+  public isBookmarksListPopulated(groupedBookmarks: GroupedBookmarks): boolean {
+    if (!groupedBookmarks) {
+      return false;
+    }
+
+    return Object.values(groupedBookmarks).some(
+      (bookmarks: Bookmark[]) => bookmarks.length > 0
+    );
+  }
+
+  private initializeFilteredBookmarksStream(): void {
+    this.filteredBookmarks$ = combineLatest([
+      this.store.select(selectSortedBookmarks),
+      this.searchService.searchTermObservable$,
+    ]).pipe(
+      map(([bookmarks, term]) => {
+        if (!term) return bookmarks;
+        return this.searchService.fuzzySearch(term, bookmarks);
+      })
+    );
+  }
+
+  private initializeGroupedBookmarksStream(): void {
     this.groupedBookmarks$ = this.store
       .select(selectSortedBookmarks)
       .pipe(map((bookmarks: Bookmark[]) => this.groupBookmarks(bookmarks)));
   }
 
-  ngOnInit() {
+  private loadBookmarksIfStoreIsEmpty(): void {
     this.store
       .select(selectSortedBookmarks)
       .pipe(take(1))
@@ -34,18 +67,6 @@ export class BookmarksListComponent implements OnInit {
           this.bookmarksService.loadBookmarks();
         }
       });
-  }
-
-  public isBookmarksListPopulated(
-    groupedBookmarks: GroupedBookmarks
-  ): boolean {
-    if (!groupedBookmarks) {
-      return false;
-    }
-
-    return Object.values(groupedBookmarks).some(
-      (bookmarks: Bookmark[]) => bookmarks.length > 0
-    );
   }
 
   private groupBookmarks(bookmarks: Bookmark[]): GroupedBookmarks {

@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content class="bookmark-content">
-    <mat-icon fontIcon="bookmark" />
+    <mat-icon>bookmark</mat-icon>
     <div class="bookmark-details">
       <span>{{ bookmark.name }}</span>
       <a href="{{ bookmark.url }}">{{ bookmark.url }}</a>
@@ -10,7 +10,7 @@
       class="edit-bookmark-button"
       (click)="goToEditBookmark(bookmark.id)"
     >
-      <mat-icon fontIcon="edit" />
+      <mat-icon>edit</mat-icon>
     </button>
   </mat-card-content>
 </mat-card>
