@@ -11,7 +11,8 @@ mat-card-header {
 mat-card-content {
     display: flex;
     align-items: center;
-    color: $dark-grey
+    color: $dark-grey;
+    padding-bottom: 0 !important;
 }
 
 .bookmark-details {

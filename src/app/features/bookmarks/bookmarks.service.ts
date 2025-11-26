@@ -1,30 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { Bookmark } from 'src/app/shared/models/bookmark';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import { environment } from '../../../environments/environment';
+import { Bookmark } from '../../shared/models/bookmark';
+import {
+  loadBookmarks,
+  addBookmark,
+  updateBookmark,
+} from './store/bookmarks.actions';
+import { AppState } from '../../app.state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookmarksService {
   private apiUrl = `${environment.apiUrl}/bookmarks`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private store: Store<AppState>) {}
+
+  public loadBookmarks(): void {
+    this.getBookmarks()
+      .pipe(
+        tap((bookmarks) => this.store.dispatch(loadBookmarks({ bookmarks }))),
+        catchError((error) => {
+          console.error('Error loading bookmarks:', error);
+          return of([]);
+        })
+      )
+      .subscribe();
+  }
 
   public getBookmarks(): Observable<Bookmark[]> {
     return this.http.get<Bookmark[]>(this.apiUrl);
   }
 
-  public getBookmarkById(id: string): Observable<Bookmark> {
-    return this.http.get<Bookmark>(`${this.apiUrl}/${id}`);
+  public addBookmark(bookmark: Bookmark): void {
+    this.store.dispatch(addBookmark({ bookmark }));
   }
 
-  public createBookmark(bookmark: Bookmark): Observable<Bookmark> {
-    return this.http.post<Bookmark>(this.apiUrl, bookmark);
-  }
-
-  public updateBookmark(id: string, bookmark: Bookmark): Observable<Bookmark> {
-    return this.http.put<Bookmark>(`${this.apiUrl}/${id}`, bookmark);
+  public updateBookmark(updatedBookmark: Bookmark): void {
+    this.store.dispatch(updateBookmark({ updatedBookmark }));
   }
 }

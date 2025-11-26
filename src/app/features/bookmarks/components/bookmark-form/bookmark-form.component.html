@@ -45,7 +45,7 @@
         color="primary"
         class="bookmarks-form-submit-button"
         (click)="formRef.form.markAllAsTouched(); onBookmarkFormSubmit()"
-        [disabled]="bookmarkForm.invalid"
+        [disabled]="bookmarkForm.invalid || !canUpdateBookmark()"
       >
         {{ formType === "create" ? "Create Bookmark" : "Update Bookmark" }}
       </button>

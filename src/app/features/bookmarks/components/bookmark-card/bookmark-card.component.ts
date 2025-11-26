@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Bookmark } from 'src/app/shared/models/bookmark';
+
+import { Bookmark } from '../../../../shared/models/bookmark';
 
 @Component({
   selector: 'app-bookmark-card',

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { BookmarksListComponent } from './features/bookmarks/components/bookmarks-list/bookmarks-list.component';
 import { BookmarkFormComponent } from './features/bookmarks/components/bookmark-form/bookmark-form.component';
 
@@ -9,7 +10,7 @@ const routes: Routes = [
   { path: 'bookmarks', component: BookmarksListComponent },
   { path: 'add-bookmark', component: BookmarkFormComponent },
   { path: 'edit-bookmark/:id', component: BookmarkFormComponent },
-  { path: '**', redirectTo: '/bookmarks' }
+  { path: '**', redirectTo: '/bookmarks' },
 ];
 
 @NgModule({
