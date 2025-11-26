@@ -1,0 +1,28 @@
+{
+  bookmarks: [
+    {
+      id: 1,
+      name: "Angular",
+      url: "https://angular.dev",
+      updatedAt: "2025-11-26T16:05:38.166Z",
+    },
+    {
+      id: 2,
+      name: "Angular Material",
+      url: "https://material.angular.dev",
+      updatedAt: "2025-11-26T16:05:38.166Z",
+    },
+    {
+      id: 3,
+      name: "Firebase",
+      url: "https://firebase.google.com",
+      updatedAt: "2025-11-25T16:05:38.166Z",
+    },
+    {
+      id: 4,
+      name: "SS&C",
+      url: "https://www.ssctech.com",
+      updatedAt: "2025-11-24T16:05:38.166Z",
+    },
+  ],
+}

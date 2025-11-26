@@ -1,0 +1,33 @@
+@import "_variables";
+@import "_common_styles";
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  justify-content: space-between;
+}
+
+.bookmarks-form-description {
+  color: $light-grey;
+}
+
+.bookmarks-form-icon {
+  color: $light-grey;
+}
+
+.bookmarks-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookmarks-form-url-input {
+  width: 100%;
+  margin-left: 1rem;
+}
+
+.bookmarks-form-submit-button {
+  margin-left: auto;
+}

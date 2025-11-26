@@ -1,1 +1,25 @@
-<p>bookmarks-list works!</p>
+<div class="container" *ngIf="(groupedBookmarks$ | async) as groupedBookmarks">
+  <section>
+    <h3 class="bookmarks-section-title">Today</h3>
+    <app-bookmark-card
+      *ngFor="let bookmark of groupedBookmarks.today"
+      [bookmark]="bookmark"
+    ></app-bookmark-card>
+  </section>
+
+  <section>
+    <h3 class="bookmarks-section-title">Yesterday</h3>
+    <app-bookmark-card
+      *ngFor="let bookmark of groupedBookmarks.yesterday"
+      [bookmark]="bookmark"
+    ></app-bookmark-card>
+  </section>
+
+  <section>
+    <h3 class="bookmarks-section-title">Older</h3>
+    <app-bookmark-card
+      *ngFor="let bookmark of groupedBookmarks.older"
+      [bookmark]="bookmark"
+    ></app-bookmark-card>
+  </section>
+</div>

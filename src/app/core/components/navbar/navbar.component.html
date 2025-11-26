@@ -1,1 +1,5 @@
-<p>navbar works!</p>
+<mat-toolbar color="primary">
+  <span class="navbar-title" (click)="goToBookmarks()">Bookmarker</span>
+  <app-search-bar></app-search-bar>
+  <button mat-icon-button (click)="goToAddBookmark()"><mat-icon fontIcon="add" /></button>
+</mat-toolbar>
