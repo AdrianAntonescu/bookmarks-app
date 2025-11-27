@@ -16,13 +16,13 @@ Go to /server-mock path and run
 node generate-db.json
 ```
 
-You can access the local server on http://localhost:3000
-
 You can now start the local server using
 
 ```bash
 npx json-server db.json
 ```
+
+And access it at http://localhost:3000
 
 Go to root path and start the app using
 
@@ -31,3 +31,17 @@ ng serve --environment=development
 ```
 
 and open it on http://localhost:4200
+
+## App description
+
+The Bookmarker app lets you save and edit bookmarks of favourite websites.
+
+You can view the bookmarks as a list and edit them one by one.
+
+The list can be filtered using the fuzzy search option in the navbar.
+
+Create/update bookmarks constraints:
+
+- Both name and URL are required
+- URL must have a valid format (e.g.: http(s)://example.com)
+- URL must be unique in the list
