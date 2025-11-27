@@ -19,8 +19,19 @@ mat-card-content {
     display: flex;
     flex-direction: column;
     margin-left: 1rem;
+    min-width: 0;
 }
 
 .edit-bookmark-button {
     margin-left: auto;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a:visited {
+    color: $blue;
 }

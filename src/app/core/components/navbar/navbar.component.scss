@@ -1,5 +1,11 @@
 @import '_variables.scss';
 
+:host {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
 mat-toolbar {
     display: flex;
     justify-content: space-between;

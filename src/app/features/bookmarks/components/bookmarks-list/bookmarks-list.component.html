@@ -1,6 +1,6 @@
 <ng-container
   *ngIf="
-    searchService.searchTermObservable$ | async;
+    searchService.searchTermObservable$ | async as searchTerm;
     else groupedBookmarksSection
   "
 >
@@ -9,6 +9,7 @@
     *ngIf="filteredBookmarks$ | async as filteredBookmarks"
   >
     <ng-container *ngIf="filteredBookmarks.length; else noResultsFound">
+      <p class="bookmarks-section-title">Results for "<em>{{searchTerm}}</em>"</p>
       <app-bookmark-card
         *ngFor="let bookmark of filteredBookmarks"
         [bookmark]="bookmark"
@@ -36,7 +37,7 @@
       "
     >
       <section *ngIf="groupedBookmarks.today.length > 0">
-        <h3 class="bookmarks-section-title">Today</h3>
+        <p class="bookmarks-section-title">Today</p>
         <app-bookmark-card
           *ngFor="let bookmark of groupedBookmarks.today"
           [bookmark]="bookmark"
@@ -44,7 +45,7 @@
       </section>
 
       <section *ngIf="groupedBookmarks.yesterday.length > 0">
-        <h3 class="bookmarks-section-title">Yesterday</h3>
+        <p class="bookmarks-section-title">Yesterday</p>
         <app-bookmark-card
           *ngFor="let bookmark of groupedBookmarks.yesterday"
           [bookmark]="bookmark"
@@ -52,7 +53,7 @@
       </section>
 
       <section *ngIf="groupedBookmarks.older.length > 0">
-        <h3 class="bookmarks-section-title">Older</h3>
+        <p class="bookmarks-section-title">Older</p>
         <app-bookmark-card
           *ngFor="let bookmark of groupedBookmarks.older"
           [bookmark]="bookmark"

@@ -2,8 +2,8 @@
   <mat-card-content class="bookmark-content">
     <mat-icon>bookmark</mat-icon>
     <div class="bookmark-details">
-      <span>{{ bookmark.name }}</span>
-      <a href="{{ bookmark.url }}">{{ bookmark.url }}</a>
+      <span class="text-ellipsis">{{ bookmark.name }}</span>
+      <a href="{{ bookmark.url }}" target="_blank" class="text-ellipsis">{{ bookmark.url }}</a>
     </div>
     <button
       mat-icon-button
