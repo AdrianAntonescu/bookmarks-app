@@ -34,7 +34,9 @@ and open it on http://localhost:4200
 
 ## App description
 
-The Bookmarker app lets you save and edit bookmarks of favourite websites.
+The app is responsive and can be used in both web and mobile browsers.
+
+The Bookmarker app lets you view, save and edit bookmarks of favourite websites.
 
 You can view the bookmarks as a list and edit them one by one.
 

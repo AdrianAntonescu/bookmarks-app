@@ -15,6 +15,10 @@ mat-card-content {
     padding-bottom: 0 !important;
 }
 
+mat-icon {
+    flex-shrink: 0;
+}
+
 .bookmark-details {
     display: flex;
     flex-direction: column;
