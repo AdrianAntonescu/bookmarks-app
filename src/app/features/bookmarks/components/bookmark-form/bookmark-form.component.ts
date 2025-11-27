@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormGroup,
@@ -9,7 +9,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { take } from 'rxjs';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import { Bookmark } from '../../../../shared/models/bookmark';
 import { BookmarksService } from '../../bookmarks.service';
@@ -25,7 +25,10 @@ import {
   styleUrls: ['./bookmark-form.component.scss'],
 })
 export class BookmarkFormComponent implements OnInit {
-  public formType: 'create' | 'edit' = 'create';
+  private bookmarkId?: string;
+  private originalBookmark?: Bookmark;
+
+  public formType: 'create' | 'update' = 'create';
   public newBookmark: Bookmark = {
     id: crypto.randomUUID(),
     name: '',
@@ -33,9 +36,6 @@ export class BookmarkFormComponent implements OnInit {
     updatedAt: '',
   };
   public bookmarkForm: FormGroup = new FormGroup({});
-
-  private bookmarkId?: string;
-  private originalBookmark?: Bookmark;
 
   constructor(
     private router: Router,
@@ -48,60 +48,6 @@ export class BookmarkFormComponent implements OnInit {
   ngOnInit() {
     this.setFormProperties();
     this.generateFormGroup();
-  }
-
-  public onBookmarkFormSubmit(): void {
-    if (this.bookmarkForm.valid) {
-      this.newBookmark = {
-        id: this.bookmarkId ?? this.newBookmark.id,
-        updatedAt: new Date().toISOString(),
-        ...this.bookmarkForm.value,
-      };
-
-      if (this.formType === 'edit') {
-        this.bookmarksService.updateBookmark(this.newBookmark);
-      } else {
-        this.bookmarksService.addBookmark(this.newBookmark);
-      }
-
-      this.router.navigate(['/bookmarks']);
-    }
-  }
-
-  // can also be written as a helper function that takes the form group as an argument as well
-  public getErrorMessage(formControlName: string): string {
-    const formControl = this.bookmarkForm.get(formControlName);
-
-    if (!formControl || !formControl.errors) {
-      return '';
-    }
-
-    if (formControl.hasError('required')) {
-      return 'Field is required';
-    }
-
-    if (formControl.hasError('pattern')) {
-      return 'Invalid format - http(s)://example.com';
-    }
-
-    if (formControl.hasError('notUniqueUrl')) {
-      return 'Bookmark with this URL is already saved';
-    }
-
-    return '';
-  }
-
-  public canUpdateBookmark(): boolean {
-    if (this.formType === 'create') {
-      return true;
-    }
-
-    return (
-      JSON.stringify({
-        name: this.originalBookmark?.name,
-        url: this.originalBookmark?.url,
-      }) !== JSON.stringify(this.bookmarkForm.value)
-    );
   }
 
   private generateFormGroup(): void {
@@ -126,7 +72,7 @@ export class BookmarkFormComponent implements OnInit {
       .join('/');
 
     if (url.includes('edit-bookmark')) {
-      this.formType = 'edit';
+      this.formType = 'update';
       this.bookmarkId = this.route.snapshot.paramMap.get('id')!;
       this.newBookmark = {
         ...this.getBookmarkFromStore(this.bookmarkId),
@@ -171,5 +117,59 @@ export class BookmarkFormComponent implements OnInit {
 
       return error;
     };
+  }
+
+  public onBookmarkFormSubmit(): void {
+    if (this.bookmarkForm.valid) {
+      this.newBookmark = {
+        id: this.bookmarkId ?? this.newBookmark.id,
+        updatedAt: new Date().toISOString(),
+        ...this.bookmarkForm.value,
+      };
+
+      if (this.formType === 'update') {
+        this.bookmarksService.updateBookmark(this.newBookmark);
+      } else {
+        this.bookmarksService.addBookmark(this.newBookmark);
+      }
+
+      this.router.navigate(['/bookmarks']);
+    }
+  }
+
+  // can also be written as a helper function that takes the form group as an argument as well
+  public getErrorMessage(formControlName: string): string {
+    const formControl = this.bookmarkForm.get(formControlName);
+
+    if (!formControl || !formControl.errors) {
+      return '';
+    }
+
+    if (formControl.hasError('required')) {
+      return 'Field is required';
+    }
+
+    if (formControl.hasError('pattern')) {
+      return 'Invalid format - http(s)://example.com';
+    }
+
+    if (formControl.hasError('notUniqueUrl')) {
+      return 'Bookmark with this URL is already saved';
+    }
+
+    return '';
+  }
+
+  public canUpdateBookmark(): boolean {
+    if (this.formType === 'create') {
+      return true;
+    }
+
+    return (
+      JSON.stringify({
+        name: this.originalBookmark?.name,
+        url: this.originalBookmark?.url,
+      }) !== JSON.stringify(this.bookmarkForm.value)
+    );
   }
 }

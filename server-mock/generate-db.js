@@ -63,4 +63,4 @@ const bookmarks = [
 const db = { bookmarks };
 
 fs.writeFileSync(dbFilePath, JSON.stringify(db, null, 2));
-console.log("db.json generated successfully with manually defined bookmarks!");
+console.log("db.json generated successfully");

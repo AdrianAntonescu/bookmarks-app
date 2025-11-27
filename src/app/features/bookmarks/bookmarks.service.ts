@@ -16,7 +16,7 @@ import { AppState } from '../../app.state';
   providedIn: 'root',
 })
 export class BookmarksService {
-  private apiUrl = `${environment.apiUrl}/bookmarks`;
+  private bookmarksApiEndpoint = `${environment.apiUrl}/bookmarks`;
 
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
@@ -33,7 +33,7 @@ export class BookmarksService {
   }
 
   public getBookmarks(): Observable<Bookmark[]> {
-    return this.http.get<Bookmark[]>(this.apiUrl);
+    return this.http.get<Bookmark[]>(this.bookmarksApiEndpoint);
   }
 
   public addBookmark(bookmark: Bookmark): void {

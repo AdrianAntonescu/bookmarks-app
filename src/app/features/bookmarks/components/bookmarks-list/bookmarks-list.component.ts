@@ -30,16 +30,6 @@ export class BookmarksListComponent implements OnInit {
     this.initializeFilteredBookmarksStream();
   }
 
-  public isBookmarksListPopulated(groupedBookmarks: GroupedBookmarks): boolean {
-    if (!groupedBookmarks) {
-      return false;
-    }
-
-    return Object.values(groupedBookmarks).some(
-      (bookmarks: Bookmark[]) => bookmarks.length > 0
-    );
-  }
-
   private initializeFilteredBookmarksStream(): void {
     this.filteredBookmarks$ = combineLatest([
       this.store.select(selectSortedBookmarks),
@@ -75,10 +65,11 @@ export class BookmarksListComponent implements OnInit {
       yesterday: [],
       older: [],
     };
+    const oneDayInMilliseconds = 1000 * 60 * 60 * 24;
     const normalizedToday = normalizeDate(new Date());
     const normalizedYesterday = normalizeDate(
-      new Date(normalizedToday.getTime() - 1000 * 60 * 60 * 24)
-    ); // subtract 1 day in milliseconds
+      new Date(normalizedToday.getTime() - oneDayInMilliseconds)
+    );
 
     bookmarks.forEach((bookmark: Bookmark) => {
       const normalizedBookmarkDate = normalizeDate(
@@ -97,5 +88,15 @@ export class BookmarksListComponent implements OnInit {
     });
 
     return groupedBookmarks;
+  }
+
+  public isBookmarksListPopulated(groupedBookmarks: GroupedBookmarks): boolean {
+    if (!groupedBookmarks) {
+      return false;
+    }
+
+    return Object.values(groupedBookmarks).some(
+      (bookmarks: Bookmark[]) => bookmarks.length > 0
+    );
   }
 }

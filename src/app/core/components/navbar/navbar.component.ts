@@ -10,11 +10,11 @@ export class NavbarComponent {
 
   constructor(private router: Router) {}
 
-  goToAddBookmark() {
+  public goToAddBookmark(): void {
     this.router.navigate(['/add-bookmark']);
   }
 
-  goToBookmarks() {
+  public goToBookmarks(): void {
     this.router.navigate(['/bookmarks']);
   }
 }

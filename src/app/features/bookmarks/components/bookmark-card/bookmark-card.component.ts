@@ -13,7 +13,7 @@ export class BookmarkCardComponent {
 
   constructor(private router: Router) {}
 
-  public goToEditBookmark(bookmarkId: string) {
+  public goToEditBookmark(bookmarkId: string): void {
     this.router.navigate(['/edit-bookmark', bookmarkId]);
   }
 }

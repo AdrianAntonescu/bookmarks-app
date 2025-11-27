@@ -10,6 +10,7 @@ import { Bookmark } from '../models/bookmark';
 export class SearchService {
   private fuse!: Fuse<Bookmark>;
   private searchTerm$ = new BehaviorSubject<string>('');
+
   public searchTermObservable$ = this.searchTerm$.asObservable();
 
   public setSearchTerm(term: string): void {
