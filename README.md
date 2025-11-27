@@ -19,7 +19,7 @@ node generate-db.json
 You can now start the local server using
 
 ```bash
-npx json-server db.json
+npx json-server db.js
 ```
 
 And access it at http://localhost:3000
