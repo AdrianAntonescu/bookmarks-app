@@ -19,12 +19,12 @@ node generate-db.json
 You can now start the local server using
 
 ```bash
-npx json-server db.js
+npx json-server db.json
 ```
 
 And access it at http://localhost:3000
 
-Go to root path and start the app using
+Open new terminal in root path and start the app using
 
 ```bash
 ng serve --environment=development
