@@ -27,7 +27,7 @@ And access it at http://localhost:3000
 Open new terminal in root path and start the app using
 
 ```bash
-ng serve --environment=development
+ng serve --configuration=development
 ```
 
 and open it on http://localhost:4200
