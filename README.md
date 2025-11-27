@@ -4,10 +4,30 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Go to root path and install dependencies `npm install`
+Go to root path and install dependencies
 
-Go to /serve-mock path and run `node generate-db.json`
+```bash
+npm install
+```
 
-You can now start the local server using `npx json-server db.json`
+Go to /server-mock path and run
 
-Go to root path and start the app using `ng serve --environment=development` and open it on http://localhost:4200
+```bash
+node generate-db.json
+```
+
+You can access the local server on http://localhost:3000
+
+You can now start the local server using
+
+```bash
+npx json-server db.json
+```
+
+Go to root path and start the app using
+
+```bash
+ng serve --environment=development
+```
+
+and open it on http://localhost:4200
