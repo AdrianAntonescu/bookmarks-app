@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, Observable, take } from 'rxjs';
+import { combineLatest, map, Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Bookmark, GroupedBookmarks } from '../../../../shared/models/bookmark';
