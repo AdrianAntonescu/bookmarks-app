@@ -36,7 +36,9 @@ and open it on http://localhost:4200
 
 The Bookmarker app lets you save and edit bookmarks of favourite websites.
 
-You can view the bookmarks as a list and edit them one by one.
+New bookmarks cand be added using the "+" button in the navbar.
+
+You can view the bookmarks as a list grouped by the date when they were last updated (Today, Yesterday and Older) and edit them one by one.
 
 The list can be filtered using the fuzzy search option in the navbar.
 
