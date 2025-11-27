@@ -13,7 +13,7 @@ npm install
 Go to /server-mock path and run
 
 ```bash
-node generate-db.json
+node generate-db.js
 ```
 
 You can now start the local server using
